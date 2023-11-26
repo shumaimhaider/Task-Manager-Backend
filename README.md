@@ -26,11 +26,12 @@ Initialize the Go module for your project using the following command:
 
 ```go mod init github.com/shumaimhaider/task_manager_api```
 
-```go mod tidy```
+
 
 # Installing and Setting up Gin
 
 ``` go get -u github.com/gin-gonic/gin```
+```go mod tidy```
 
 # Run
 
