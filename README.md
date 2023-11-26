@@ -13,14 +13,19 @@
 # Set Path
 
 ```sudo nano $HOME/.profile```
+
 ```export PATH=$PATH:/usr/local/go/bin```
+
 ```source ~/.profile```
+
 ```go version```
 
 # Initialize the Module
 
 Initialize the Go module for your project using the following command:
+
 ```go mod init github.com/shumaimhaider/task_manager_api```
+
 ```go mod tidy```
 
 # Installing and Setting up Gin
