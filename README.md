@@ -31,6 +31,7 @@ Initialize the Go module for your project using the following command:
 # Installing and Setting up Gin
 
 ``` go get -u github.com/gin-gonic/gin```
+
 ```go mod tidy```
 
 # Run
