@@ -22,6 +22,7 @@ var tasks = []Task{
 }
 
 func main() {
+	// db := connect.Connect()
 	router := gin.Default()
 	router.GET("/ping", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
