@@ -1,19 +1,19 @@
 package models
 
 import (
-	"context"
 	"fmt"
 
+	"github.com/gin-gonic/gin"
 	"github.com/uptrace/bun"
 )
 
 type TaskType struct {
 	bun.BaseModel `bun:"table:task_type"`
-	TaskTypeid    int    `bun:"pk, autoincrement"`
-	TaskTypeName  string `bun:"task_type_name"`
+	TaskTypeId    int    `bun:"task_type_id,pk,autoincrement"`
+	TaskTypeName  string `bun:"task_type_name,notempty"`
 }
 
-func (TaskType) Create_Task_Type(ctx context.Context, task_type_name string, db *bun.DB) (int, error) {
+func Create_Task_Type(ctx *gin.Context, task_type_name string, db *bun.DB) (int, error) {
 	taskType := &TaskType{
 		TaskTypeName: task_type_name,
 	}
@@ -23,12 +23,12 @@ func (TaskType) Create_Task_Type(ctx context.Context, task_type_name string, db 
 		return -1, fmt.Errorf("error inserting task type: %w", err)
 	}
 
-	return taskType.TaskTypeid, nil
+	return taskType.TaskTypeId, nil
 }
 
-func (TaskType) Update_task_Type(ctx context.Context, id int, task_type_name string, db *bun.DB) (bool, error) {
+func Update_task_Type(ctx *gin.Context, task_type_id int, task_type_name string, db *bun.DB) (bool, error) {
 	updateTaskType := &TaskType{
-		TaskTypeid:   id,
+		TaskTypeId:   task_type_id,
 		TaskTypeName: task_type_name,
 	}
 
