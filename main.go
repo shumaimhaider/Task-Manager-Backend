@@ -4,7 +4,10 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/shumaimhaider/task_manager_api/connect"
+	"github.com/shumaimhaider/task_manager_api/controller"
 )
 
 type Task struct {
@@ -22,28 +25,16 @@ var tasks = []Task{
 }
 
 func main() {
-	// db := connect.Connect()
+	db := connect.Connect()
+	controller.DB = db
+
 	router := gin.Default()
-	router.GET("/ping", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	ginConfig := cors.DefaultConfig()
+	ginConfig.AllowAllOrigins = true
+	router.Use(cors.New(ginConfig))
 
-	router.POST("/create", func(ctx *gin.Context) {
-		var createTask Task
-		if err := ctx.ShouldBindJSON(&createTask); err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{
-				"error": err,
-			})
-			return
-		}
-		tasks = append(tasks, createTask)
-		ctx.JSON(http.StatusCreated, gin.H{
-			"tasks": tasks,
-		})
-
-	})
+	router.POST("/create/tasktype", controller.Handle_Create_Task_Type)
+	router.PUT("/update/tasktype", controller.Handle_Update_Create_Task_Type)
 
 	router.GET("/tasks", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"tasks": tasks})
@@ -60,34 +51,6 @@ func main() {
 			}
 		}
 
-	})
-
-	router.PUT("/update/task/:id", func(ctx *gin.Context) {
-		id := ctx.Param("id")
-
-		var updatedTask Task
-
-		if err := ctx.ShouldBindJSON(&updatedTask); err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-
-		for i, task := range tasks {
-			if task.ID == id {
-				// update only specified field
-				if updatedTask.Title != "" {
-					tasks[i].Title = updatedTask.Title
-				}
-
-				ctx.JSON(http.StatusOK, gin.H{
-					"Updated Task": task,
-				})
-				return
-			}
-		}
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"error": "Task Not Found",
-		})
 	})
 
 	router.DELETE("/delete/task/:id", func(ctx *gin.Context) {
