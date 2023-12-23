@@ -16,7 +16,7 @@ type TaskType struct {
 	TaskTypeName  string `bun:"task_type_name,notempty"`
 }
 
-func Create_Task_Type(ctx *gin.Context, task_type_name string) (int, error) {
+func CreateTaskType(ctx *gin.Context, task_type_name string) (int, error) {
 	taskType := &TaskType{
 		TaskTypeName: task_type_name,
 	}
@@ -29,7 +29,7 @@ func Create_Task_Type(ctx *gin.Context, task_type_name string) (int, error) {
 	return taskType.TaskTypeId, nil
 }
 
-func Update_task_Type(ctx *gin.Context, task_type_id int, task_type_name string) (bool, error) {
+func UpdatetaskType(ctx *gin.Context, task_type_id int, task_type_name string) (bool, error) {
 	updateTaskType := &TaskType{
 		TaskTypeId:   task_type_id,
 		TaskTypeName: task_type_name,
@@ -43,7 +43,7 @@ func Update_task_Type(ctx *gin.Context, task_type_id int, task_type_name string)
 	return true, nil
 }
 
-func Delete_ToDo_Type(ctx context.Context, taskTypeName string) (bool, error) {
+func DeleteTaskTypeType(ctx context.Context, taskTypeName string) (bool, error) {
 	TaskType := &TaskType{TaskTypeName: taskTypeName}
 	res, err := common.DB.NewDelete().Model(TaskType).WherePK().Exec(ctx)
 	if err != nil {

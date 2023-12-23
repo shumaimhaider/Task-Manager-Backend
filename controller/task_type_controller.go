@@ -12,7 +12,7 @@ type TaskTypeRequest struct {
 	TaskTypeName string `json:"task_type_name"`
 }
 
-func Handle_Create_Task_Type(ctx *gin.Context) {
+func HandleCreateTaskType(ctx *gin.Context) {
 	var taskTypeRequest TaskTypeRequest
 	err := ctx.ShouldBindJSON(&taskTypeRequest)
 	if err != nil {
@@ -20,7 +20,7 @@ func Handle_Create_Task_Type(ctx *gin.Context) {
 			"error": err.Error(),
 		})
 	}
-	res, err := models.Create_Task_Type(ctx, taskTypeRequest.TaskTypeName)
+	res, err := models.CreateTaskType(ctx, taskTypeRequest.TaskTypeName)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error creating task type: %w": err.Error(),
@@ -30,7 +30,7 @@ func Handle_Create_Task_Type(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, res)
 }
 
-func Handle_Update_Create_Task_Type(ctx *gin.Context) {
+func HandleUpdateTaskType(ctx *gin.Context) {
 	var taskTypeRequest TaskTypeRequest
 	err := ctx.ShouldBindJSON(&taskTypeRequest)
 	if err != nil {
@@ -39,7 +39,35 @@ func Handle_Update_Create_Task_Type(ctx *gin.Context) {
 		})
 	}
 
-	res, err := models.Update_task_Type(ctx, taskTypeRequest.TaskTypeID, taskTypeRequest.TaskTypeName)
+	res, err := models.UpdatetaskType(ctx, taskTypeRequest.TaskTypeID, taskTypeRequest.TaskTypeName)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+	}
+	ctx.JSON(http.StatusOK, res)
+}
+
+func HandleGetTaskType(ctx *gin.Context) {
+	res, err := models.GetAllTaskType(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+	}
+	ctx.JSON(http.StatusOK, res)
+}
+
+func HandleDeleteTaskType(ctx *gin.Context) {
+	var taskTypeRequest TaskTypeRequest
+	err := ctx.ShouldBindJSON(&taskTypeRequest)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	res, err := models.DeleteTaskTypeType(ctx, taskTypeRequest.TaskTypeName)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
