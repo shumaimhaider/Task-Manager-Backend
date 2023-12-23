@@ -32,15 +32,28 @@ Initialize the Go module for your project using the following command:
 
 ```go mod init github.com/shumaimhaider/task_manager_api```
 
-# Installing Depedencies
+# InstallDepedencies
 ```go mod download```
 
 ```go mod tidy```
 
+# Configure Database credentials
+
+Configure username, password and db in[migration main](Task-Manager-Backend/migrations/main.go)
+
+# DataBase Migrations 
+
+Intialize the table for migrations in db
+
+```make migrate-init```
+Runs all available migrations
+
+```make migrate-up```
+
+Reverts last migration
+```make migrate-down```
+
+
 # Run
 
-Naviagte to routes directory
-
-```cd routes```
-
-```go run main.go```
+```make dev-local```
