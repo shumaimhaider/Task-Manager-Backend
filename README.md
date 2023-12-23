@@ -39,7 +39,7 @@ Initialize the Go module for your project using the following command:
 
 # Configure Database credentials
 
-Configure username, password and db name in [migration main](migrations/main.go)
+Configure username, password and db name in [migration main](migrations/main.go) and [connect](connect/connect.go)
 
 # DataBase Migrations 
 
