@@ -28,24 +28,19 @@ To check go version
 
 # Initialize the Module
 
-
-
 Initialize the Go module for your project using the following command:
 
 ```go mod init github.com/shumaimhaider/task_manager_api```
 
-
 # Installing Depedencies
-
-Install migration package
-
-```go get github.com/go-pg/migrations/v8```
-
-Install gin-gonic
-```go get -u github.com/gin-gonic/gin```
+```go mod download```
 
 ```go mod tidy```
 
 # Run
+
+Naviagte to routes directory
+
+```cd routes```
 
 ```go run main.go```
