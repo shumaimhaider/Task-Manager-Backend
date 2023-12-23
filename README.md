@@ -32,7 +32,7 @@ Initialize the Go module for your project using the following command:
 
 ```go mod init github.com/shumaimhaider/task_manager_api```
 
-# InstallDepedencies
+# Install Depedencies
 ```go mod download```
 
 ```go mod tidy```
