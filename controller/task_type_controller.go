@@ -5,7 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/shumaimhaider/task_manager_api/models"
+	"github.com/uptrace/bun"
 )
+
+var DB *bun.DB
 
 type TaskTypeRequest struct {
 	TaskTypeID   int    `json:"task_type_id"`
@@ -20,7 +23,7 @@ func Handle_Create_Task_Type(ctx *gin.Context) {
 			"error": err.Error(),
 		})
 	}
-	res, err := models.Create_Task_Type(ctx, taskTypeRequest.TaskTypeName)
+	res, err := models.Create_Task_Type(ctx, taskTypeRequest.TaskTypeName, DB)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error creating task type: %w": err.Error(),
@@ -39,7 +42,7 @@ func Handle_Update_Create_Task_Type(ctx *gin.Context) {
 		})
 	}
 
-	res, err := models.Update_task_Type(ctx, taskTypeRequest.TaskTypeID, taskTypeRequest.TaskTypeName)
+	res, err := models.Update_task_Type(ctx, taskTypeRequest.TaskTypeID, taskTypeRequest.TaskTypeName, DB)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),

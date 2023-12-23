@@ -6,7 +6,6 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/shumaimhaider/task_manager_api/common"
 	"github.com/shumaimhaider/task_manager_api/connect"
 	"github.com/shumaimhaider/task_manager_api/controller"
 )
@@ -27,7 +26,7 @@ var tasks = []Task{
 
 func main() {
 	db := connect.Connect()
-	common.DB = db
+	controller.DB = db
 
 	router := gin.Default()
 	ginConfig := cors.DefaultConfig()
