@@ -39,20 +39,21 @@ Initialize the Go module for your project using the following command:
 
 # Configure Database credentials
 
-Configure username, password and db in[migration main](Task-Manager-Backend/migrations/main.go)
+Configure username, password and db name in [migration main](migrations/main.go)
 
 # DataBase Migrations 
 
 Intialize the table for migrations in db
 
 ```make migrate-init```
+
 Runs all available migrations
 
 ```make migrate-up```
 
 Reverts last migration
-```make migrate-down```
 
+```make migrate-down```
 
 # Run
 
