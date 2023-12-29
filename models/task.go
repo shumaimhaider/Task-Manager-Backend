@@ -45,34 +45,26 @@ func UpdateTaskCompleted(ctx context.Context, id int, iscompleted bool) (bool, e
 }
 
 func GetAllToDosTask(ctx context.Context, db *bun.DB) ([]common.Task, error) {
-	var toDoTasks []Task
+	var task []Task
 
-	err := db.NewSelect().Model(&toDoTasks).Relation("ToDoType").OrderExpr("todo_task_id ASC").Scan(ctx)
-
-	// err := db.NewSelect().Model(&toDoTasks).Relation("ToDoType").Where("is_completed = ?", true).OrderExpr("todo_task_id ASC").Scan(context.Background())
-	// err := db.NewSelect().Model(&toDoTasks).
-	// 	Relation("ToDoType").
-	// 	GroupExpr("todo_type_id").
-	// 	Having("Min(is_completed=true)>1").
-	// 	Scan(ctx)
+	err := db.NewSelect().Model(&task).Relation("ToDoType").OrderExpr("todo_task_id ASC").Scan(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("error get all tasks %v", err)
 	}
-	return convertDBTodoToControllerTodo(toDoTasks), nil
+	return converterTask(task), nil
 }
 
-// converter
-func convertDBTodoToControllerTodo(dbTodos []Task) []common.Task {
-	result := make([]common.Task, len(dbTodos))
-	for i, dbTodo := range dbTodos {
+func converterTask(dbTask []Task) []common.Task {
+	result := make([]common.Task, len(dbTask))
+	for i, dbTask := range dbTask {
 		controllerTodo := common.Task{
-			ID:          dbTodo.ID,
-			Details:     dbTodo.Details,
-			IsCompleted: dbTodo.IsCompleted,
-			TaskTypeID:  dbTodo.TaskTypeID,
+			ID:          dbTask.ID,
+			Details:     dbTask.Details,
+			IsCompleted: dbTask.IsCompleted,
+			TaskTypeID:  dbTask.TaskTypeID,
 			TaskType: common.TaskType{
-				TaskTypeId:   dbTodo.TaskType.TaskTypeId,
-				TaskTypeName: dbTodo.TaskType.TaskTypeName,
+				TaskTypeId:   dbTask.TaskType.TaskTypeId,
+				TaskTypeName: dbTask.TaskType.TaskTypeName,
 			},
 		}
 		result[i] = controllerTodo
@@ -80,8 +72,8 @@ func convertDBTodoToControllerTodo(dbTodos []Task) []common.Task {
 	return result
 }
 
-func DeleteTask(ctx context.Context, todo_task_id int) (bool, error) {
-	task := &Task{ID: todo_task_id}
+func DeleteTask(ctx context.Context, task_id int) (bool, error) {
+	task := &Task{ID: task_id}
 	res, err := common.DB.NewDelete().Model(task).WherePK().Exec(ctx)
 	if err != nil {
 		return false, fmt.Errorf("error deleting task %v", err)
