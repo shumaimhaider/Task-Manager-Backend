@@ -17,3 +17,9 @@ migrate-down:
 
 dev-local:
 	go run routes/main.go
+
+# Install Dependencies
+
+install-requirements:
+	go mod download
+	go mod tidy
