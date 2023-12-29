@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/gin-gonic/gin"
 	"github.com/shumaimhaider/task_manager_api/common"
 	"github.com/uptrace/bun"
 )
@@ -13,10 +12,10 @@ import (
 type TaskType struct {
 	bun.BaseModel `bun:"table:task_type"`
 	TaskTypeId    int    `bun:"task_type_id,pk,autoincrement"`
-	TaskTypeName  string `bun:"task_type_name,notempty"`
+	TaskTypeName  string `bun:"task_type_name"`
 }
 
-func CreateTaskType(ctx *gin.Context, task_type_name string) (int, error) {
+func CreateTaskType(ctx context.Context, task_type_name string) (int, error) {
 	taskType := &TaskType{
 		TaskTypeName: task_type_name,
 	}
@@ -29,7 +28,7 @@ func CreateTaskType(ctx *gin.Context, task_type_name string) (int, error) {
 	return taskType.TaskTypeId, nil
 }
 
-func UpdatetaskType(ctx *gin.Context, task_type_id int, task_type_name string) (bool, error) {
+func UpdatetaskType(ctx context.Context, task_type_id int, task_type_name string) (bool, error) {
 	updateTaskType := &TaskType{
 		TaskTypeId:   task_type_id,
 		TaskTypeName: task_type_name,
@@ -43,7 +42,7 @@ func UpdatetaskType(ctx *gin.Context, task_type_id int, task_type_name string) (
 	return true, nil
 }
 
-func DeleteTaskTypeType(ctx context.Context, taskTypeName string) (bool, error) {
+func DeleteTaskType(ctx context.Context, taskTypeName string) (bool, error) {
 	TaskType := &TaskType{TaskTypeName: taskTypeName}
 	res, err := common.DB.NewDelete().Model(TaskType).WherePK().Exec(ctx)
 	if err != nil {

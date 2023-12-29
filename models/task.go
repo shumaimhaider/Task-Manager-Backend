@@ -18,8 +18,8 @@ type Task struct {
 	TaskType      TaskType `bun:"rel:belongs-to,join:task_id=task_type_id"`
 }
 
-func CreateTask(ctx context.Context, details string, iscompleted bool, taskTypeID int) (int, error) {
-	taskType := &Task{Details: details, IsCompleted: iscompleted, TaskTypeID: taskTypeID}
+func CreateTask(ctx context.Context, req common.TaskRequest) (int, error) {
+	taskType := &Task{Details: req.Details, IsCompleted: req.IsCompleted, TaskTypeID: req.TaskTypeID}
 	_, err := common.DB.NewInsert().Model(taskType).Exec(ctx)
 	if err != nil {
 		return -1, fmt.Errorf("error creating task %v", err)
@@ -27,8 +27,8 @@ func CreateTask(ctx context.Context, details string, iscompleted bool, taskTypeI
 	return taskType.ID, nil
 }
 
-func UpdateTaskCompleted(ctx context.Context, id int, iscompleted bool) (bool, error) {
-	task := &Task{ID: id, IsCompleted: iscompleted}
+func UpdateTaskCompleted(ctx context.Context, req common.TaskRequest) (bool, error) {
+	task := &Task{ID: req.ID, IsCompleted: req.IsCompleted}
 	res, err := common.DB.NewUpdate().Model(task).Set("is_completed = ?", task.IsCompleted).Where("task_id = ?", task.ID).Exec(ctx)
 	if err != nil {
 		return false, fmt.Errorf("error updating task: %w", err)
@@ -44,10 +44,10 @@ func UpdateTaskCompleted(ctx context.Context, id int, iscompleted bool) (bool, e
 	return true, nil
 }
 
-func GetAllToDosTask(ctx context.Context, db *bun.DB) ([]common.Task, error) {
+func GetAllTask(ctx context.Context) ([]common.Task, error) {
 	var task []Task
 
-	err := db.NewSelect().Model(&task).Relation("ToDoType").OrderExpr("todo_task_id ASC").Scan(ctx)
+	err := common.DB.NewSelect().Model(&task).Relation("TaskType").OrderExpr("task_id ASC").Scan(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("error get all tasks %v", err)
 	}
