@@ -73,7 +73,7 @@ func HandleDeleteTaskType(ctx *gin.Context) {
 		return
 	}
 
-	res, err := models.DeleteTaskTypeType(ctx, taskTypeRequest.TaskTypeName)
+	res, err := models.DeleteTaskType(ctx, taskTypeRequest.TaskTypeName)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
