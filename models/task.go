@@ -10,7 +10,7 @@ import (
 )
 
 type Task struct {
-	bun.BaseModel `bun:"todo_task"`
+	bun.BaseModel `bun:"task"`
 	ID            int      `bun:"task_id,pk,autoincrement"`
 	Details       string   `bun:"details"`
 	IsCompleted   bool     `bun:"is_completed"`
