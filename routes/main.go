@@ -19,8 +19,13 @@ func main() {
 
 	router.POST("/create/tasktype", controller.HandleCreateTaskType)
 	router.PUT("/update/tasktype", controller.HandleUpdateTaskType)
-	router.GET("/tasks", controller.HandleGetTaskType)
-	router.DELETE("/delete/task", controller.HandleDeleteTaskType)
+	router.GET("/taskstype", controller.HandleGetTaskType)
+	router.DELETE("/delete/tasktype", controller.HandleDeleteTaskType)
+
+	router.POST("/create/task", controller.HandleCreateTask)
+	router.PUT("/update/task", controller.HandleUpdateTask)
+	router.GET("/tasks", controller.HandleGetTask)
+	router.DELETE("/delete/task", controller.HandleDeleteTask)
 
 	router.Run(":8080")
 }

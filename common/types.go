@@ -16,3 +16,10 @@ type Task struct {
 	TaskTypeID  int    `json:"task_type_id"`
 	TaskType    TaskType
 }
+
+type TaskRequest struct {
+	ID          int    `json:"task_id"`
+	Details     string `json:"details"`
+	IsCompleted bool   `json:"is_completed"`
+	TaskTypeID  int    `json:"task_type_id"`
+}

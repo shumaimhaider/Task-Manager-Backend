@@ -13,7 +13,7 @@ import (
 type TaskType struct {
 	bun.BaseModel `bun:"table:task_type"`
 	TaskTypeId    int    `bun:"task_type_id,pk,autoincrement"`
-	TaskTypeName  string `bun:"task_type_name,notempty"`
+	TaskTypeName  string `bun:"task_type_name"`
 }
 
 func CreateTaskType(ctx *gin.Context, task_type_name string) (int, error) {
