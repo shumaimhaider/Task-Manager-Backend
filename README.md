@@ -34,7 +34,11 @@ Initialize the Go module for your project using the following command:
 
 # Install Depedencies
 
+FrontEnd
 ```make install-requirements```
+
+Backend
+```npm install```
 
 # Configure Database credentials
 
@@ -55,5 +59,9 @@ Reverts last migration
 ```make migrate-down```
 
 # Run
-
+ 
+ For BackEnd
 ```make dev-local```
+
+For FrontEnd
+```npm start```
